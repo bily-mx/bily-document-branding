@@ -1,0 +1,15 @@
+{
+  "name": "bily-brand",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Skill de Claude con la identidad de Bily para generar documentos de Word, PDF y presentaciones.",
+  "type": "module",
+  "scripts": {
+    "ejemplos": "node ejemplos/documento.mjs && node ejemplos/presentacion.mjs && node ejemplos/pdf.mjs"
+  },
+  "dependencies": {
+    "docx": "^9.16.1",
+    "pptxgenjs": "^4.0.1",
+    "puppeteer-core": "^25.19.0"
+  }
+}

@@ -1,0 +1,114 @@
+/* Bily: hoja de estilo de impresión para documentos PDF (hoja carta).
+   Los colores y tamaños salen de tokens.json; si cambias uno, cambia el otro.
+   La marca de la linea siguiente se sustituye por las @font-face con la ruta local de assets/fonts. */
+__FUENTES__
+
+:root {
+  --papel: #FFFFFF; --tinta: #111827; --tinta-2: #374151; --tinta-3: #5E6673; --tinta-4: #8A929D; --tinta-5: #878F9A;
+  --linea: #E4E7EA; --linea-fuerte: #CDD3D8; --noche: #0E1624;
+  --verde: #16C79A; --verde-texto: #067A5B;
+  --acc: #16C79A; --acc-tx: #067A5B; --acc-soft: #0C9F79;
+  --sans: 'Geist', Arial, sans-serif; --mono: 'Geist Mono', Consolas, monospace;
+}
+.acc-verde { --acc: #16C79A; --acc-tx: #067A5B; --acc-soft: #0C9F79; }
+.acc-morado { --acc: #A855C8; --acc-tx: #8C34B0; --acc-soft: #B06ACB; }
+.acc-naranja { --acc: #F5A020; --acc-tx: #B35400; --acc-soft: #CC7A0A; }
+.acc-rojo { --acc: #F25252; --acc-tx: #A8231B; --acc-soft: #EE6A5F; }
+
+@page {
+  size: Letter;
+  margin: 2.4cm 2.5cm 2.2cm;
+  @bottom-left { content: "bily.mx"; font: 500 8pt 'Geist Mono', monospace; color: #5E6673; border-top: .75pt solid #E4E7EA; padding-top: 6pt; vertical-align: top; }
+  @bottom-right { content: counter(page); font: 500 8pt 'Geist Mono', monospace; color: #5E6673; border-top: .75pt solid #E4E7EA; padding-top: 6pt; vertical-align: top; }
+  @bottom-center { content: ""; border-top: .75pt solid #E4E7EA; }
+}
+@page :first { @bottom-left { content: none; border: 0; } @bottom-right { content: none; border: 0; } @bottom-center { content: none; border: 0; } }
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+body { font: 400 10.5pt/1.5 var(--sans); color: var(--tinta-2); background: var(--papel); font-kerning: normal; text-rendering: optimizeLegibility; }
+p { margin-bottom: 8pt; text-wrap: pretty; orphans: 2; widows: 2; }
+h1, h2, h3 { color: var(--tinta); font-weight: 600; text-wrap: balance; break-after: avoid; }
+strong, b, .kw { font-weight: 600; color: var(--tinta); }
+em { font-style: normal; }
+a { color: var(--verde-texto); font-weight: 600; text-decoration: underline; text-decoration-thickness: .75pt; text-underline-offset: .22em; }
+
+/* ---- Portada ---- */
+.portada { height: 22.9cm; display: flex; flex-direction: column; break-after: page; }
+.portada .logo { width: 3.4cm; }
+.portada .centro { margin-top: auto; }
+.portada h1 { font-size: 34pt; line-height: 1.04; letter-spacing: -.035em; max-width: 15cm; }
+.portada h1 em { color: var(--acc-soft); }
+.portada .lead { margin-top: 14pt; font-size: 14pt; max-width: 13cm; }
+.portada .meta { margin-top: 2.2cm; display: grid; grid-template-columns: repeat(3, 1fr); gap: 0 16pt; border-top: .75pt solid var(--linea-fuerte); padding-top: 9pt; margin-bottom: 2.6cm; }
+.portada .meta dt { font: 500 8.5pt/1.3 var(--sans); color: var(--tinta-3); }
+.portada .meta dd { margin-top: 3pt; font: 500 9.5pt/1.4 var(--mono); color: var(--tinta); }
+
+/* ---- Rótulo de sección: punto de acento + mono en minúsculas ---- */
+.rotulo { display: flex; align-items: center; gap: 7pt; margin: 26pt 0 6pt; font: 500 8.5pt/1 var(--mono); color: var(--acc-tx); text-transform: lowercase; break-after: avoid; }
+.rotulo::before { content: ''; width: 6pt; height: 6pt; border-radius: 50%; background: var(--acc); }
+.portada .rotulo { margin: 0 0 12pt; font-size: 9pt; }
+
+/* ---- Títulos: h1 a dos tonos (la segunda parte en <em>) ---- */
+h1 { font-size: 24pt; line-height: 1.08; letter-spacing: -.03em; margin: 4pt 0 10pt; }
+h1 em { color: var(--acc-soft); }
+h2 { font-size: 16pt; line-height: 1.15; letter-spacing: -.02em; margin: 20pt 0 7pt; }
+h3 { font-size: 12pt; line-height: 1.25; margin: 14pt 0 5pt; }
+.lead { font-size: 13pt; line-height: 1.45; color: var(--tinta-2); margin-bottom: 14pt; max-width: 15cm; }
+.nota { font-size: 9pt; line-height: 1.45; color: var(--tinta-3); }
+.salto { break-before: page; }
+
+/* ---- Datos ---- */
+.dato, code { font: 500 9.5pt var(--mono); color: var(--tinta); font-variant-numeric: tabular-nums; letter-spacing: -.01em; }
+
+/* ---- Listas ---- */
+ul, ol { margin: 0 0 10pt; padding-left: 0; list-style: none; }
+li { position: relative; padding-left: 15pt; margin-bottom: 4pt; break-inside: avoid; }
+ol, ul { break-before: avoid; }
+ul > li::before { content: ''; position: absolute; left: 3pt; top: .62em; width: 3.5pt; height: 3.5pt; border-radius: 50%; background: var(--tinta-4); }
+ol { counter-reset: n; }
+ol > li { padding-left: 20pt; counter-increment: n; }
+ol > li::before { content: counter(n); position: absolute; left: 0; top: .08em; font: 500 9.5pt var(--mono); color: var(--tinta-3); }
+
+/* ---- Tabla: líneas finas, sin rellenos ---- */
+table { width: 100%; border-collapse: collapse; margin: 6pt 0 14pt; break-inside: auto; }
+thead { display: table-header-group; }
+tr { break-inside: avoid; }
+th { font: 500 8.5pt/1.3 var(--sans); color: var(--tinta-3); text-align: left; padding: 3pt 8pt 5pt 0; border-bottom: 1pt solid var(--linea-fuerte); }
+td { padding: 6pt 8pt 6pt 0; border-bottom: .75pt solid var(--linea); font-size: 10pt; vertical-align: middle; }
+td:first-child { color: var(--tinta); }
+tbody tr:last-child td { border-bottom: 0; }
+th:last-child, td:last-child { padding-right: 0; }
+th.num, td.num { text-align: right; }
+td.num, td.dato { font: 500 9.5pt var(--mono); color: var(--tinta); font-variant-numeric: tabular-nums; }
+tfoot td { border-top: 1pt solid var(--tinta); border-bottom: 0; font-weight: 600; color: var(--tinta); }
+tfoot td.num { font-weight: 600; }
+
+/* ---- Estado del semáforo fiscal: punto + texto, siempre con su par de fondo ---- */
+.pill { display: inline-flex; align-items: center; gap: 5pt; padding: 2pt 8pt 2pt 7pt; border-radius: 999px; font: 600 8.5pt/1.3 var(--sans); white-space: nowrap; background: #EEF0F2; color: #4B5563; }
+.pill::before { content: ''; width: 5pt; height: 5pt; border-radius: 50%; background: currentColor; }
+.pill.ok { background: #DDF5EA; color: #045A3B; }
+.pill.wa { background: #FDEBD3; color: #7A4200; }
+.pill.dup { background: #F3E3F5; color: #6B2A7F; }
+.pill.bad { background: #FFE3E0; color: #A8231B; }
+
+/* ---- Cifras protagonistas ---- */
+.cifras { display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; gap: 0 16pt; margin: 8pt 0 16pt; break-inside: avoid; }
+.cifras > div { border-top: 1pt solid var(--linea-fuerte); padding-top: 9pt; }
+.cifras b { display: block; font: 500 26pt/1.05 var(--mono); letter-spacing: -.03em; color: var(--tinta); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.cifras .destacar b, .cifras b.destacar { color: var(--acc-tx); }
+.cifras span { display: block; margin-top: 4pt; font-size: 9pt; line-height: 1.4; color: var(--tinta-3); }
+.cifras.chica b { font-size: 18pt; }
+
+/* ---- Aviso: papel, borde fino y raya de acento; texto en mono; a todo el ancho ---- */
+.aviso { margin: 8pt 0 14pt; padding: 9pt 13pt; border: .75pt solid var(--linea); border-left: 2pt solid var(--acc); font: 500 9pt/1.5 var(--mono); color: var(--tinta-2); break-inside: avoid; }
+
+/* ---- Sello: estado estampado sobre un documento ---- */
+.sello { display: inline-flex; padding: 2pt 6pt; border: 1.1pt solid currentColor; border-radius: 4pt; font: 600 8pt/1.2 var(--mono); letter-spacing: .04em; text-transform: uppercase; transform: rotate(-4deg); color: #4B5563; }
+.sello.ok { color: #045A3B; } .sello.wa { color: #7A4200; } .sello.dup { color: #6B2A7F; } .sello.bad { color: #A8231B; }
+
+/* ---- Figuras ---- */
+figure { margin: 10pt 0 14pt; break-inside: avoid; }
+figure img { display: block; max-width: 100%; }
+figcaption { margin-top: 5pt; font-size: 8.5pt; color: var(--tinta-3); }
+hr { border: 0; border-top: .75pt solid var(--linea); margin: 16pt 0; }
